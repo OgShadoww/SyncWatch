@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-base-dark: #111314;
+  --color-panel: #1b1d1f;
+  --color-line: #393c3d;
+  --color-muted: #adb1b2;
+  --color-accent: #ffad83;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @apply min-h-screen bg-base-dark text-zinc-100 antialiased;
+    font-family: Inter, system-ui, sans-serif;
+  }
+  button {
+    @apply cursor-pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  :disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-xl border border-line bg-panel p-5 sm:p-6;
+  }
+  .field {
+    @apply w-full min-w-0 rounded-md border border-line bg-base-dark px-3 py-2.5 text-sm placeholder:text-zinc-500;
+  }
+  .primary {
+    @apply rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-base-dark hover:brightness-105;
+  }
+  .secondary {
+    @apply rounded-md border border-line bg-panel px-3 py-2 text-sm font-medium hover:border-zinc-500;
+  }
+  .label {
+    @apply mb-2 block text-sm font-medium;
+  }
+  .feedback {
+    @apply text-sm text-orange-200;
+  }
+}

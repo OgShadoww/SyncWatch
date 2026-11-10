@@ -1,0 +1,8 @@
+.git
+.env
+frontend/node_modules
+frontend/.next
+frontend/out
+frontend/*.tsbuildinfo
+backend/server
+**/.DS_Store

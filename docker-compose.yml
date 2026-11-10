@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: syncwatch
+      POSTGRES_DB: syncwatch
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-syncwatch}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U syncwatch -d syncwatch"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: .
+    environment:
+      PGHOST: db
+      PGPORT: 5432
+      PGUSER: syncwatch
+      PGDATABASE: syncwatch
+      PGPASSWORD: ${POSTGRES_PASSWORD:-syncwatch}
+      PGSSLMODE: disable
+      DEV_ORIGIN: ${DEV_ORIGIN:-}
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
