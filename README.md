@@ -9,7 +9,7 @@ cp .env.example .env
 docker compose up --build -d
 ```
 
-Open [SyncWatch](http://localhost:8080). Create a room with a display name and open its invitation in a private browser window to join as a guest. Paste a YouTube link, then use the host's **Set video**, **Play**, **Pause**, and **Seek** controls. For guests on another device, open the app through the host's reachable network address before copying the link.
+Open SyncWatch. Create a room with a display name and open its invitation in a private browser window to join as a guest. Paste a YouTube link, then use the host's **Set video**, **Play**, **Pause**, and **Seek** controls. For guests on another device, open the app through the host's reachable network address before copying the link.
 
 Use `docker compose down` to stop. The PostgreSQL volume retains rooms and chat. Set `APP_PORT` in `.env` to change the port.
 
@@ -22,7 +22,7 @@ Use `docker compose down` to stop. The PostgreSQL volume retains rooms and chat.
 
 ## Development and checks
 
-For Next.js hot reload, start the stack on port 8080 with `DEV_ORIGIN=http://localhost:3000 docker compose up --build -d`, then run `npm ci && npm run dev` in `frontend/`. Open [the development server](http://localhost:3000).
+For Next.js hot reload, start the stack on port 8080 with `DEV_ORIGIN=http://localhost:3000 docker compose up --build -d`, then run `npm ci && npm run dev` in `frontend/`
 
 ```sh
 (cd backend && go test -race ./... && go build ./cmd/server)
