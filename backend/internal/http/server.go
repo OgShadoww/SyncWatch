@@ -38,6 +38,7 @@ func New(ctx context.Context, rooms *room.Manager, assets, devOrigin string) (ht
 	r := chi.NewRouter()
 	r.Use(http.NewCrossOriginProtection().Handler)
 	r.Post("/api/rooms", api.create)
+	r.Post("/api/ai/suggest", suggestHandler())
 	r.Get("/api/rooms/{id}/ws", api.socket)
 	r.Handle("/*", http.FileServer(http.Dir(assets)))
 	return r, api.sockets.Wait

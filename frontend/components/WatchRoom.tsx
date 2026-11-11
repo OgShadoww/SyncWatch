@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Clock, Control, position, roomPath, timeLabel, videoID } from "../lib/room";
 import { useRoom } from "../lib/useRoom";
 import { Player } from "./Player";
+import { VideoSuggest } from "./VideoSuggest";
 
 function Transport({
   clock,
@@ -175,42 +176,46 @@ export function WatchRoom({ id, name }: { id: string; name: string }) {
             </div>
           )}
           {host && (
-            <form
-              className="border-t border-line p-4 sm:p-5"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const id = videoID(video);
-                if (!id) {
-                  setVideoError("Enter a valid YouTube link or video ID.");
-                  return;
-                }
-                control({ action: "video", videoId: id });
-                setVideo("");
-                setVideoError("");
-              }}
-            >
-              <label className="label" htmlFor="video">
-                YouTube link or video ID
-              </label>
-              <div className="flex gap-2">
-                <input
-                  id="video"
-                  className="field"
-                  value={video}
-                  onChange={(e) => setVideo(e.target.value)}
-                  placeholder="Paste a YouTube link"
-                  required
-                />
-                <button className="secondary shrink-0" disabled={!online}>
-                  Set video
-                </button>
+            <div className="border-t border-line p-4 sm:p-5">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <label className="text-sm font-medium" htmlFor="video">
+                  YouTube link or video ID
+                </label>
+                <VideoSuggest />
               </div>
-              {videoError && (
-                <p className="feedback mt-2" role="alert">
-                  {videoError}
-                </p>
-              )}
-            </form>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const id = videoID(video);
+                  if (!id) {
+                    setVideoError("Enter a valid YouTube link or video ID.");
+                    return;
+                  }
+                  control({ action: "video", videoId: id });
+                  setVideo("");
+                  setVideoError("");
+                }}
+              >
+                <div className="flex gap-2">
+                  <input
+                    id="video"
+                    className="field"
+                    value={video}
+                    onChange={(e) => setVideo(e.target.value)}
+                    placeholder="Paste a YouTube link"
+                    required
+                  />
+                  <button className="secondary shrink-0" disabled={!online}>
+                    Set video
+                  </button>
+                </div>
+                {videoError && (
+                  <p className="feedback mt-2" role="alert">
+                    {videoError}
+                  </p>
+                )}
+              </form>
+            </div>
           )}
         </section>
         <aside className="grid min-w-0 gap-5">
